@@ -126,7 +126,7 @@ export interface Video {
   title: string;
   channel: string;
   thumbnail: string;
-  embedUrl: string;        // ✅ camelCase (not embed_url)
+  embed_url: string;        // ✅ camelCase (not embed_url)
 }
 
 // ============================================================================
