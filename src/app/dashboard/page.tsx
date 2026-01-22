@@ -1,4 +1,5 @@
 // File: src/app/dashboard/page.tsx
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -17,6 +18,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
+import { AxiosError } from 'axios';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -53,7 +55,7 @@ export default function DashboardPage() {
     router.push('/');
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this course?')) return;
 
     try {
@@ -67,85 +69,76 @@ export default function DashboardPage() {
   if (authLoading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <BookOpen className="h-8 w-8 text-blue-600" />
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Raphael</h1>
-                <p className="text-sm text-gray-600">Welcome, {user.name}</p>
-              </div>
-            </div>
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-8 h-8 text-blue-600" />
+            <h1 className="text-2xl font-bold text-gray-900">Raphael AI</h1>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-gray-700">{user.name}</span>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900"
+              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 transition"
             >
-              <LogOut className="h-5 w-5" />
+              <LogOut className="w-4 h-4" />
               Logout
             </button>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        {/* Create Course Button */}
-        <div className="mb-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8 flex justify-between items-center">
+          <h2 className="text-3xl font-bold text-gray-900">Your Courses ({courses.length})</h2>
           <button
             onClick={() => setShowCreateModal(true)}
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
           >
-            <Plus className="h-5 w-5" />
+            <Plus className="w-5 h-5" />
             Create New Course
           </button>
         </div>
 
-        {/* Course Library */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
-            Your Courses ({courses.length})
-          </h2>
-
-          {isLoading ? (
-            <div className="flex justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-            </div>
-          ) : courses.length === 0 ? (
-            <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-              <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 mb-4">No courses yet</p>
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="text-blue-600 hover:underline"
-              >
-                Create your first course
-              </button>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  course={course}
-                  onDelete={handleDelete}
-                  onClick={() => router.push(`/courses/${course.id}`)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+          </div>
+        ) : courses.length === 0 ? (
+          <div className="text-center py-12">
+            <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-gray-900 mb-2">No courses yet</h3>
+            <p className="text-gray-600 mb-4">
+              Get started by creating your first AI-generated course
+            </p>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="text-blue-600 hover:underline"
+            >
+              Create your first course
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {courses.map((course) => (
+              <CourseCard
+                key={course.id}
+                course={course}
+                onDelete={handleDelete}
+                onClick={() => router.push(`/courses/${course.id}`)}
+              />
+            ))}
+          </div>
+        )}
       </main>
 
-      {/* Create Course Modal */}
       {showCreateModal && (
         <CreateCourseModal
           onClose={() => setShowCreateModal(false)}
@@ -165,22 +158,22 @@ function CourseCard({
   onClick,
 }: {
   course: Course;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
   onClick: () => void;
 }) {
   const statusConfig = {
     generating: {
-      icon: <Loader2 className="h-5 w-5 animate-spin text-yellow-600" />,
+      icon: <Clock className="w-4 h-4" />,
       text: 'Generating...',
       color: 'bg-yellow-50 border-yellow-200 text-yellow-700',
     },
     completed: {
-      icon: <CheckCircle className="h-5 w-5 text-green-600" />,
+      icon: <CheckCircle className="w-4 h-4" />,
       text: 'Completed',
       color: 'bg-green-50 border-green-200 text-green-700',
     },
     failed: {
-      icon: <XCircle className="h-5 w-5 text-red-600" />,
+      icon: <XCircle className="w-4 h-4" />,
       text: 'Failed',
       color: 'bg-red-50 border-red-200 text-red-700',
     },
@@ -190,18 +183,11 @@ function CourseCard({
 
   return (
     <div
-      className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition cursor-pointer"
       onClick={onClick}
+      className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition cursor-pointer"
     >
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 mb-1">
-            {course.topic}
-          </h3>
-          <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-            {course.level}
-          </span>
-        </div>
+      <div className="flex justify-between items-start mb-4">
+        <h3 className="text-lg font-semibold text-gray-900">{course.title}</h3>
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -209,22 +195,25 @@ function CourseCard({
           }}
           className="text-gray-400 hover:text-red-600 transition"
         >
-          <Trash2 className="h-5 w-5" />
+          <Trash2 className="w-4 h-4" />
         </button>
       </div>
 
-      <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${status.color}`}>
+      <div className="flex items-center gap-2 mb-3">
+        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+          {course.level}
+        </span>
+      </div>
+
+      <div className={`flex items-center gap-2 px-3 py-2 rounded-md border ${status.color}`}>
         {status.icon}
         <span className="text-sm font-medium">{status.text}</span>
       </div>
 
-      <div className="mt-4 flex items-center gap-2 text-sm text-gray-500">
-        <Clock className="h-4 w-4" />
-        Created {formatDate(course.created_at)}
-      </div>
+      <p className="text-sm text-gray-500 mt-3">Created {formatDate(course.created_at)}</p>
 
       {course.error_message && (
-        <p className="mt-2 text-sm text-red-600">{course.error_message}</p>
+        <p className="text-sm text-red-600 mt-2">{course.error_message}</p>
       )}
     </div>
   );
@@ -238,7 +227,7 @@ function CreateCourseModal({
   onSuccess: () => void;
 }) {
   const [formData, setFormData] = useState({
-    topic: '',
+    title: '',
     level: 'beginner' as 'beginner' | 'intermediate' | 'advanced',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -247,49 +236,61 @@ function CreateCourseModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (!formData.title || formData.title.trim().length === 0) {
+      setError('Title cannot be empty');
+      return;
+    }
+
+    if (formData.title.length > 200) {
+      setError('Title must be 200 characters or less');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
       await courseAPI.create(formData);
       onSuccess();
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to create course');
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      setError(error.response?.data?.message || 'Failed to create course');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl max-w-md w-full p-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          Create New Course
-        </h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Create New Course</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-              {error}
-            </div>
-          )}
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+            {error}
+          </div>
+        )}
 
-          <div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Course Topic
+              Course Title
             </label>
             <input
               type="text"
-              required
-              value={formData.topic}
-              onChange={(e) =>
-                setFormData({ ...formData, topic: e.target.value })
-              }
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="e.g., Deep Learning with TensorFlow"
+              maxLength={200}
+              required
             />
+            <p className="text-xs text-gray-500 mt-1">
+              {formData.title.length}/200 characters
+            </p>
           </div>
 
-          <div>
+          <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Difficulty Level
             </label>
@@ -298,7 +299,7 @@ function CreateCourseModal({
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  level: e.target.value as any,
+                  level: e.target.value as 'beginner' | 'intermediate' | 'advanced',
                 })
               }
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -309,7 +310,7 @@ function CreateCourseModal({
             </select>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             <button
               type="button"
               onClick={onClose}
@@ -319,7 +320,7 @@ function CreateCourseModal({
             </button>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !formData.title || formData.title.length > 200}
               className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Creating...' : 'Create Course'}

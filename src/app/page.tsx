@@ -10,7 +10,7 @@ export default function LandingPage() {
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <BookOpen className="h-8 w-8 text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">Raphael</span>
+            <span className="text-2xl font-bold text-gray-900">Raphael AI</span>
           </div>
           <div className="flex gap-4">
             <Link
