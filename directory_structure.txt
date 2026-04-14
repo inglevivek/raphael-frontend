@@ -1,0 +1,101 @@
+Directory structure for: C:\Home\Projects\Mainstream\raph-dev\raphael-frontend
+
+├── .env.local.example
+├── app
+│   ├── (app)
+│   │   ├── courses
+│   │   │   └── [id]
+│   │   │       ├── not-found.tsx
+│   │   │       └── page.tsx
+│   │   ├── dashboard
+│   │   │   ├── _components
+│   │   │   │   ├── course-card.tsx
+│   │   │   │   ├── course-grid-skeleton.tsx
+│   │   │   │   └── empty-state.tsx
+│   │   │   └── page.tsx
+│   │   ├── generate
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   └── profile
+│   │       └── page.tsx
+│   ├── api
+│   │   └── auth
+│   │       ├── [auth0]
+│   │       └── token
+│   │           └── route.ts
+│   ├── error.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── not-found.tsx
+│   └── page.tsx
+├── components
+│   ├── PillNav.tsx
+│   ├── generate
+│   │   ├── generate-form.tsx
+│   │   └── generation-progress.tsx
+│   ├── landing
+│   │   ├── cta-section.tsx
+│   │   ├── footer.tsx
+│   │   ├── hero.tsx
+│   │   ├── how-it-works.tsx
+│   │   ├── landing-page.tsx
+│   │   ├── navbar.tsx
+│   │   └── problem-section.tsx
+│   ├── layout
+│   │   ├── Silk.tsx
+│   │   ├── app-shell.tsx
+│   │   ├── navigation.tsx
+│   │   ├── page-header.tsx
+│   │   ├── page-transition.tsx
+│   │   ├── pill-nav.tsx
+│   │   ├── root-providers.tsx
+│   │   ├── sidebar.tsx
+│   │   └── topbar.tsx
+│   ├── profile
+│   │   └── user-card.tsx
+│   ├── raphael-logo.tsx
+│   └── ui
+│       ├── badge.tsx
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── input.tsx
+│       ├── modal.tsx
+│       ├── progress.tsx
+│       ├── skeleton.tsx
+│       └── spinner.tsx
+├── components.json
+├── d.py
+├── directory_structure.txt
+├── lib
+│   ├── api
+│   │   ├── auth
+│   │   │   └── route.ts
+│   │   ├── auth.api.ts
+│   │   ├── client.ts
+│   │   └── courses.api.ts
+│   ├── auth0.ts
+│   ├── hooks
+│   │   ├── use-course.ts
+│   │   ├── use-courses.ts
+│   │   └── use-generate-poll.ts
+│   ├── stores
+│   │   └── course-reader.store.ts
+│   ├── types
+│   │   ├── api.types.ts
+│   │   ├── course.types.ts
+│   │   └── user.types.ts
+│   └── utils
+│       ├── cn.ts
+│       ├── course.utils.ts
+│       └── format.ts
+├── middleware.ts
+├── next-env.d.ts
+├── next.config.js
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── public
+│   └── noise.txt
+├── tailwind.config.ts
+├── tsconfig.json
+└── tsconfig.tsbuildinfo
