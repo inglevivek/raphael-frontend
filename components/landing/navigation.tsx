@@ -55,7 +55,7 @@ export function TopNavBar() {
                                 <UserAvatar user={user} size={32} initials={initials} ring />
                             </Link>
 
-                            <Link href="/api/auth/logout" className="group ml-1 sm:ml-2 flex items-center">
+                            <Link href="/auth/logout" className="group ml-1 sm:ml-2 flex items-center">
                                 <div className="py-1.5 px-2 sm:px-3 rounded-lg flex items-center justify-center text-xs sm:text-sm font-semibold text-on-surface/80 hover:bg-white/5 hover:text-error transition-colors gap-1.5 border border-transparent hover:border-white/10">
                                     <LogOut className="w-4 h-4" />
                                     <span className="hidden sm:block">Out</span>
@@ -70,7 +70,7 @@ export function TopNavBar() {
                             <Link href="/about" className="hidden sm:block text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">
                                 About
                             </Link>
-                            <Link href="/api/auth/login" className="py-1.5 sm:py-2 px-4 sm:px-5 bg-white hover:bg-white/90 text-background rounded-lg transition-colors flex items-center justify-center">
+                            <Link href="/auth/login" className="py-1.5 sm:py-2 px-4 sm:px-5 bg-white hover:bg-white/90 text-background rounded-lg transition-colors flex items-center justify-center">
                                 <span className="text-xs sm:text-sm font-bold">Sign In</span>
                             </Link>
                         </div>
