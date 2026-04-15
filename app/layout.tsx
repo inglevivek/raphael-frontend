@@ -1,32 +1,50 @@
-import type { Metadata, Viewport } from "next";
-import { RootProviders } from "@/components/layout/root-providers";
-import localFont from "next/font/local"; // Or use google fonts loader
-import "./globals.css";
+import type { Metadata } from 'next'
+import { Inter, Manrope } from 'next/font/google'
+import Silk from '@/components/react-bits/Silk' // Adjust import path if needed
+import './globals.css'
 
-// Assuming you downloaded these for local hosting (best for performance)
-// Otherwise, keep one method only.
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: {
-    default: "Raphael — AI Course Generator",
-    template: "%s | Raphael"
-  },
-  description: "Learn anything with AI-generated structured courses.",
-};
+  title: 'Raphael | The Digital Curator',
+  description: 'AI-Powered Learning Architecture',
+}
 
-export const viewport: Viewport = {
-  themeColor: "#111010",
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" className="antialiased selection:bg-[var(--color-primary)] selection:text-white">
-      <body className="bg-[var(--color-bg)] text-[var(--color-text)] font-body">
-        <RootProviders>
-          {/* Subtle noise overlay applied globally */}
-          <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('/noise.svg')]" />
+    <html lang="en" className={`${inter.variable} ${manrope.variable} dark`}>
+      <body className="bg-background text-on-surface font-inter antialiased min-h-screen selection:bg-primary-container selection:text-white relative">
+
+        {/* Global Anchored Backdrop */}
+        <div className="fixed inset-0 z-[-1] w-full h-full pointer-events-none">
+          {/* Customizing the Silk props to match your dark/violet aesthetic */}
+          <Silk
+            color="#2e0166ff"
+            speed={4}
+            scale={1.5}
+            noiseIntensity={1.2}
+          />
+        </div>
+
+        {/* Main Application Content */}
+        <div className="relative z-0 flex flex-col min-h-screen">
           {children}
-        </RootProviders>
+        </div>
       </body>
     </html>
-  );
+  )
 }

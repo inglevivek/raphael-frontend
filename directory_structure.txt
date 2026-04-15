@@ -1,68 +1,27 @@
 Directory structure for: C:\Home\Projects\Mainstream\raph-dev\raphael-frontend
 
 ├── .env.local.example
+├── .gitignore
 ├── app
-│   ├── (app)
-│   │   ├── courses
-│   │   │   └── [id]
-│   │   │       ├── not-found.tsx
-│   │   │       └── page.tsx
-│   │   ├── dashboard
-│   │   │   ├── _components
-│   │   │   │   ├── course-card.tsx
-│   │   │   │   ├── course-grid-skeleton.tsx
-│   │   │   │   └── empty-state.tsx
-│   │   │   └── page.tsx
-│   │   ├── generate
-│   │   │   └── page.tsx
-│   │   ├── layout.tsx
-│   │   └── profile
-│   │       └── page.tsx
 │   ├── api
 │   │   └── auth
-│   │       ├── [auth0]
 │   │       └── token
 │   │           └── route.ts
-│   ├── error.tsx
+│   ├── dashboard
+│   │   └── page.tsx
 │   ├── globals.css
 │   ├── layout.tsx
-│   ├── not-found.tsx
 │   └── page.tsx
 ├── components
-│   ├── PillNav.tsx
-│   ├── generate
-│   │   ├── generate-form.tsx
-│   │   └── generation-progress.tsx
 │   ├── landing
-│   │   ├── cta-section.tsx
-│   │   ├── footer.tsx
-│   │   ├── hero.tsx
-│   │   ├── how-it-works.tsx
-│   │   ├── landing-page.tsx
-│   │   ├── navbar.tsx
-│   │   └── problem-section.tsx
-│   ├── layout
+│   │   └── navigation.tsx
+│   ├── react-bits
+│   │   ├── GlassSurface.tsx
 │   │   ├── Silk.tsx
-│   │   ├── app-shell.tsx
-│   │   ├── navigation.tsx
-│   │   ├── page-header.tsx
-│   │   ├── page-transition.tsx
-│   │   ├── pill-nav.tsx
-│   │   ├── root-providers.tsx
-│   │   ├── sidebar.tsx
-│   │   └── topbar.tsx
-│   ├── profile
-│   │   └── user-card.tsx
-│   ├── raphael-logo.tsx
+│   │   └── acrylicGlass.tsx
 │   └── ui
-│       ├── badge.tsx
-│       ├── button.tsx
-│       ├── card.tsx
-│       ├── input.tsx
-│       ├── modal.tsx
-│       ├── progress.tsx
-│       ├── skeleton.tsx
-│       └── spinner.tsx
+│       ├── avatar.tsx
+│       └── pill-nav.tsx
 ├── components.json
 ├── d.py
 ├── directory_structure.txt
@@ -95,6 +54,7 @@ Directory structure for: C:\Home\Projects\Mainstream\raph-dev\raphael-frontend
 ├── package.json
 ├── postcss.config.js
 ├── public
+│   ├── noise.svg
 │   └── noise.txt
 ├── tailwind.config.ts
 ├── tsconfig.json
