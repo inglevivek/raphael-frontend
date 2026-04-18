@@ -70,7 +70,7 @@ export function TopNavBar() {
                             <Link href="/about" className="hidden sm:block text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">
                                 About
                             </Link>
-                            <Link href="/auth/login" className="py-1.5 sm:py-2 px-4 sm:px-5 bg-white hover:bg-white/90 text-background rounded-lg transition-colors flex items-center justify-center">
+                            <Link href="/auth/login?returnTo=/dashboard" className="py-1.5 sm:py-2 px-4 sm:px-5 bg-white hover:bg-white/90 text-background rounded-lg transition-colors flex items-center justify-center">
                                 <span className="text-xs sm:text-sm font-bold">Sign In</span>
                             </Link>
                         </div>

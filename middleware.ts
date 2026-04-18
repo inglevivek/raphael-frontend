@@ -8,10 +8,10 @@ export async function middleware(req: NextRequest) {
   // If the user is accessing a protected route and is not authenticated,
   // auth0.middleware will redirect them to /auth/login automatically.
   const { pathname } = req.nextUrl;
-  const isProtected = pathname.startsWith("/(app)") || 
-    pathname.startsWith("/dashboard") || 
-    pathname.startsWith("/generate") || 
-    pathname.startsWith("/courses") || 
+  const isProtected = pathname.startsWith("/app)") ||
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/generate") ||
+    pathname.startsWith("/courses") ||
     pathname.startsWith("/profile");
 
   return authRes;
