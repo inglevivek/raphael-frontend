@@ -8,14 +8,12 @@ export const auth0 = new Auth0Client({
   },
 
   async onCallback(error, context, session) {
-    // Handle auth errors
+    const baseUrl = process.env.APP_BASE_URL || process.env.AUTH0_BASE_URL || "http://localhost:3000";
+
     if (error) {
-      return NextResponse.redirect(
-        new URL(`/?auth_error=${error.message}`, process.env.AUTH0_BASE_URL!)
-      );
+      return NextResponse.redirect(new URL(`/?auth_error=${error.message}`, baseUrl));
     }
 
-    // Sync user to your DB — runs server-side, non-blocking
     if (session?.tokenSet?.accessToken) {
       try {
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/callback`, {
@@ -25,11 +23,11 @@ export const auth0 = new Auth0Client({
         });
       } catch (err) {
         console.error("[Raphael] DB user sync failed:", err);
-        // Non-blocking — login still succeeds
       }
     }
 
-    // Let Auth0 handle the final redirect automatically by doing a native NextResponse.next()
-    return NextResponse.next();
+    // CRITICAL FIX: Explicitly redirect the user to the returnTo path
+    const returnTo = context.returnTo || "/dashboard";
+    return NextResponse.redirect(new URL(returnTo, baseUrl));
   },
 });
